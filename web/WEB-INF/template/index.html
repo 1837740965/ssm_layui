@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>$Title$</title>
+    <link rel="stylesheet" th:href="@{/webjars/layui/2.5.6/css/layui.css}">
+    <link rel="stylesheet" th:href="@{/webjars/animate.css/4.1.1/animate.min.css}">
+    <link rel="stylesheet" th:href="@{/css/base.css}">
+    <link rel="stylesheet" th:href="@{/css/commons.css}">
+    <link rel="stylesheet" th:href="@{/css/layuser.css}">
+</head>
+<body>
+<div class="back">
+    <div class="layui-card stu_box">
+        <!--标题-->
+        <div class="layui-card-header">
+            <p>layuser</p>
+        </div>
+        <!--数据渲染部分-->
+        <div class="layui-card-body animate__animated animate__fadeIn">
+            <!--增删查-->
+            <div class="layui-input-inline">
+                <label>
+                    <input type="text" class="layui-input" autocomplete="off" name="searchInput">
+                </label>
+            </div>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-normal" lay-active="searchBtn">搜索</button>
+            </div>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-primary" lay-active="addBtn">添加用户</button>
+            </div>
+            <div class="layui-input-inline">
+                <button class="layui-btn layui-btn-danger" lay-active="batchDeletion">批量删除</button>
+            </div>
+            <!--渲染列表-->
+            <div class="animate__animated animate__fadeInRight animate__faster">
+                <div id="stu_data" lay-filter="student"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script th:src="@{/webjars/layui/2.5.6/layui.js}"></script>
+<script th:src="@{/js/validate.js}"></script>
+<script th:inline="javascript" type="text/javascript">
+    layui.use(['util', 'jquery', 'element', 'laytpl', 'table', 'layer'], () => {
+        //获取项目路径
+        const baseUrl =/*@{/}*/'';
+        //获取模块儿对象
+        const {util, $, element, laytpl, table, layer} = layui;
+        //表格重载
+        let tableReload = () => {
+            table.reload('stu_data', {
+                where: {
+                    search: $('input[name=searchInput]').val()
+                },
+                page: {
+                    curr: 1
+                }
+            })
+        }
+
+        //搜索框回车重载表格
+        $('input[name=searchInput]').keyup(event => {
+            if (event.keyCode === 13) {
+                tableReload();
+            }
+        })
+        //初始化数据表格
+        table.render({
+            elem: '#stu_data',
+            url: baseUrl + '/layuser/get',
+            skin: 'nob',
+            size: 'lg',
+            even: true,
+            height: 600,
+            page: true,
+            cols: [
+                [
+                    {type: 'checkbox', fixed: true},
+                    {title: 'serial', width: 80, type: 'numbers', fixed: true},
+                    {field: 'username', title: 'username', edit: 'text'},
+                    {field: 'sex', title: 'sex', edit: 'text'},
+                    {field: 'city', title: 'city', edit: 'text'},
+                    {field: 'sign', title: 'sign', edit: 'text'},
+                    {field: 'experience', title: 'experience', edit: 'text'},
+                    {field: 'logins', title: 'logins', edit: 'text'},
+                    {field: 'wealth', title: 'wealth', edit: 'text'},
+                    {field: 'score', title: 'score', edit: 'text'},
+                    {field: 'classify', title: 'classify', edit: 'text'},
+                    {title: 'operating', toolbar: '#util-bar', fixed: 'right', width: 250}
+                ]
+            ]
+        })
+        //监听checkbox
+        table.on('checkbox(student)', obj => {
+            const checkStatus = table.checkStatus('stu_data');
+            console.log(checkStatus.data);
+        })
+        //监听toolbar
+        table.on('tool(student)', obj => {
+            const {event, data} = obj;
+            //toolbar监听方法
+            const toolAction = {
+                /**
+                 * 修改信息逻辑
+                 */
+                edit() {
+                    if (validation(data))
+                        $.ajax({
+                            type: 'put',
+                            url: baseUrl + '/layuser/update',
+                            contentType: 'application/json;charset=UTF-8',
+                            data: JSON.stringify(data),
+                            dataType: 'json',
+                            success: res => {
+                                if (res.code !== 500) {
+                                    layer.msg('修改成功', {icon: 6})
+                                    setTimeout(() => {
+                                        tableReload();
+                                    }, 500)
+                                } else {
+                                    let {msg, data} = res;
+                                    layer.msg(data[0], {title: msg, icon: 5})
+                                }
+                            }
+                        })
+                },
+                /**
+                 * 根据id删除
+                 */
+                del() {
+                    let index = layer.confirm('此操作将永久删除此项', {
+                        btn: ['YES', 'NO'],
+                    }, () => {
+                        $.ajax({
+                            type: 'delete',
+                            url: baseUrl + '/layuser/del/' + data.id,
+                            dataType: 'json',
+                            success: data => {
+                                if (data.data) {
+                                    tableReload();
+                                    layer.msg('删除成功')
+                                    layer.close(index);
+                                } else {
+                                    layer.msg('删除失败')
+                                }
+                            }
+                        })
+                    }, () => {
+                        layer.msg('已取消删除');
+                    })
+                }
+            }
+            //执行对应逻辑
+            toolAction[event]();
+        })
+        //监听按钮
+        util.event('lay-active', {
+            /**
+             * 监听添加按钮
+             */
+            addBtn() {
+                layer.open({
+                    type: 2,
+                    shade: 0.3,
+                    shadeClose: true,
+                    skin: 'over',
+                    maxmin: true,
+                    area: ['544px', '605px'],
+                    content: baseUrl + '/add'
+                })
+            },
+            /**
+             *监听搜索按钮更新页面
+             */
+            searchBtn() {
+                tableReload();
+            },
+            /**
+             * 批量删除
+             */
+            batchDeletion() {
+                //获取选中的数据
+                const checkStatus = table.checkStatus('stu_data').data;
+                //判断是否有选中数据
+                if (checkStatus.length === 0) {
+                    layer.msg('当前并无选中', {
+                        icon: 5,
+                        anim: 6
+                    });
+                    return;
+                }
+                //二次判断是否删除
+                let index = layer.confirm('确定要删除选中项吗？', {
+                    btn: ['YES', 'NO'],
+                }, () => {
+                    //获取所有选中id
+                    const data = [];
+                    for (let key in checkStatus) {
+                        data.push(checkStatus[key].id);
+                    }
+                    $.ajax({
+                        type: 'delete',
+                        url: baseUrl + '/layuser/dels',
+                        contentType: 'application/json;charset=UTF-8',
+                        data: JSON.stringify(data),
+                        dataType: 'json',
+                        success: data => {
+                            if (data.data) {
+                                tableReload();
+                                layer.close(index);
+                            } else {
+                                layer.msg('删除失败')
+                            }
+                        }
+                    })
+                }, () => {
+                    layer.msg('已取消删除');
+                })
+
+            }
+        })
+    })
+</script>
+
+<script type="text/html" id="util-bar">
+    <button class="layui-btn" lay-event="edit">
+        <i class="layui-icon layui-icon-edit"></i>
+        edit
+    </button>
+    <button class="layui-btn layui-btn-danger" lay-event="del">
+        <i class="layui-icon layui-icon-delete"></i>
+        del
+    </button>
+</script>
+</body>
+</html>
