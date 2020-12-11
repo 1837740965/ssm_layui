@@ -75,6 +75,7 @@ public class LayUserController {
 
     @DeleteMapping("/del/{id}")
     public CommonResult<Boolean> deleteLayUserById(@PathVariable("id") String id) {
+        //
         boolean b = layUserService.removeById(id);
         if (b) {
             return new CommonResult<>(200, "id:" + id + "\t删除成功", b);
