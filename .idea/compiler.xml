@@ -10,7 +10,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="ssm_layui" target="8" />
+      <module name="ssm_layui" target="1.5" />
     </bytecodeTargetLevel>
   </component>
 </project>
