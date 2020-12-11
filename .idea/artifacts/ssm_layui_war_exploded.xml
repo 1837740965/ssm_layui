@@ -1,0 +1,56 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="ssm_layui:war exploded">
+    <output-path>$PROJECT_DIR$/out/artifacts/ssm_layui_war_exploded</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="ssm_layui/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="ssm_layui" />
+        </element>
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-aop:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-beans:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-context:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-core:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jcl:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-expression:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-web:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-tx:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-jdbc:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: org.springframework:spring-test:5.2.10.RELEASE" />
+          <element id="library" level="project" name="Maven: com.baomidou:mybatis-plus:3.4.0" />
+          <element id="library" level="project" name="Maven: com.baomidou:mybatis-plus-extension:3.4.0" />
+          <element id="library" level="project" name="Maven: com.baomidou:mybatis-plus-core:3.4.0" />
+          <element id="library" level="project" name="Maven: com.baomidou:mybatis-plus-annotation:3.4.0" />
+          <element id="library" level="project" name="Maven: com.github.jsqlparser:jsqlparser:3.2" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis:3.5.5" />
+          <element id="library" level="project" name="Maven: org.mybatis:mybatis-spring:2.0.5" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.3" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.11.3" />
+          <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.3" />
+          <element id="library" level="project" name="Maven: com.alibaba:druid:1.2.2" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.41" />
+          <element id="library" level="project" name="Maven: org.projectlombok:lombok:1.18.16" />
+          <element id="library" level="project" name="Maven: org.webjars:layui:2.5.6" />
+          <element id="library" level="project" name="Maven: org.webjars.npm:animate.css:4.1.1" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:4.0.1" />
+          <element id="library" level="project" name="Maven: javax.servlet.jsp:jsp-api:2.2" />
+          <element id="library" level="project" name="Maven: org.hibernate.validator:hibernate-validator:6.0.10.Final" />
+          <element id="library" level="project" name="Maven: javax.validation:validation-api:2.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.2.Final" />
+          <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.3.4" />
+          <element id="library" level="project" name="Maven: mysql:mysql-connector-java:8.0.22" />
+          <element id="library" level="project" name="Maven: com.google.protobuf:protobuf-java:3.11.4" />
+          <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf:3.0.11.RELEASE" />
+          <element id="library" level="project" name="Maven: ognl:ognl:3.1.12" />
+          <element id="library" level="project" name="Maven: org.javassist:javassist:3.20.0-GA" />
+          <element id="library" level="project" name="Maven: org.attoparser:attoparser:2.0.5.RELEASE" />
+          <element id="library" level="project" name="Maven: org.unbescape:unbescape:1.1.6.RELEASE" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.7.25" />
+          <element id="library" level="project" name="Maven: org.thymeleaf:thymeleaf-spring5:3.0.11.RELEASE" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
